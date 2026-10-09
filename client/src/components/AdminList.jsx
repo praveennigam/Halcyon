@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import { getAdminList } from '../api';
+import { cancelAppointment, getAdminList } from '../api';
 import AdminFilters from './AdminFilters';
 import AdminRows from './AdminRows';
 import Notice from './Notice';
 import Spinner from './Spinner';
+import { useToast } from './Providers';
 
 export default function AdminList() {
+  const toast = useToast();
   const [draft, setDraft] = useState('');
   const [query, setQuery] = useState('');
   const [serviceId, setServiceId] = useState('');
@@ -19,6 +21,7 @@ export default function AdminList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [held, setHeld] = useState(false);
+  const [pending, setPending] = useState('');
   const requestId = useRef(0);
 
   useEffect(() => {
@@ -44,6 +47,29 @@ export default function AdminList() {
       setter(value);
       setPage(1);
     };
+  }
+
+  async function onCancel(appointment) {
+    setPending(appointment.id);
+    try {
+      const data = await cancelAppointment(appointment.id, appointment.email);
+      setResult((current) => {
+        if (!current) return current;
+        return {
+          ...current,
+          appointments: current.appointments.map((item) => (
+            item.id === appointment.id ? data.appointment : item
+          )),
+        };
+      });
+      toast.success('Appointment cancelled. That time is open again.');
+      return true;
+    } catch (err) {
+      toast.error(err.message);
+      return false;
+    } finally {
+      setPending('');
+    }
   }
 
   function onColumnSort(key) {
@@ -151,7 +177,14 @@ export default function AdminList() {
       ) : null}
 
       {!error ? (
-        <AdminRows appointments={appointments} sort={sort} order={order} onSort={onColumnSort} />
+        <AdminRows
+          appointments={appointments}
+          sort={sort}
+          order={order}
+          onSort={onColumnSort}
+          pending={pending}
+          onCancel={onCancel}
+        />
       ) : null}
 
       {!error && total > 0 ? (
