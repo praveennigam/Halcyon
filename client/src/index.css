@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  overflow-x: clip;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: clip;
+  overflow-wrap: break-word;
+  color: #241f1b;
+  background:
+    radial-gradient(900px 420px at 0% -10%, rgba(232, 214, 190, 0.75), transparent 60%),
+    radial-gradient(760px 380px at 100% 0%, rgba(210, 228, 216, 0.85), transparent 55%),
+    #f6f3ed;
+}
+
+::selection {
+  background: #d5eadc;
+}
+
+:focus-visible {
+  outline: 2px solid #1d6b45;
+  outline-offset: 2px;
+}
+
+input[type='date'] {
+  color-scheme: light;
+  min-width: 0;
+  max-width: 100%;
+}
+
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .step-in {
+    animation: step-in 240ms ease;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .field-input {
+    @apply w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition placeholder:text-stone-400 focus:border-pine;
+  }
+
+  .field-input[data-invalid='true'] {
+    border-color: #9c4034;
+  }
+
+  .panel {
+    @apply rounded-3xl border border-line bg-card;
+  }
+}
