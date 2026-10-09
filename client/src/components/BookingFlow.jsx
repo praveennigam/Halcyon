@@ -162,8 +162,8 @@ export default function BookingFlow() {
         
       </div>
 
-      <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
-        <section ref={panelRef} className="panel min-w-0 scroll-mt-24 p-4 sm:p-7">
+      <div className="grid w-full min-w-0 grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
+        <section ref={panelRef} className="panel w-full min-w-0 max-w-full scroll-mt-24 overflow-x-clip p-4 sm:p-7">
           <StepPills current={step} />
           <div
             ref={stepBodyRef}

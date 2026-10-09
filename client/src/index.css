@@ -34,10 +34,50 @@ body {
   outline-offset: 2px;
 }
 
-input[type='date'] {
-  color-scheme: light;
+.date-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
   min-width: 0;
   max-width: 100%;
+}
+
+@media (min-width: 640px) {
+  .date-field-narrow {
+    max-width: 20rem;
+  }
+}
+
+input[type='date'] {
+  color-scheme: light;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+input[type='date']::-webkit-datetime-edit,
+input[type='date']::-webkit-datetime-edit-fields-wrapper {
+  display: inline-block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0;
+  overflow: hidden;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  margin-left: 0.15rem;
+  flex-shrink: 0;
+}
+
+/* iPhone gives an empty date a fixed width, so dd/mm/yyyy spills past the card. */
+@media (max-width: 1023px) {
+  input[type='date'] {
+    -webkit-appearance: none;
+    appearance: none;
+  }
 }
 
 @keyframes step-in {

@@ -87,7 +87,7 @@ export default function AdminFilters({
   onLimit,
 }) {
   return (
-    <section className="panel mt-6 p-4 sm:p-5">
+    <section className="panel mt-6 min-w-0 p-4 sm:p-5">
       <div className="min-w-0">
         <label htmlFor="visit-search" className="text-xs font-medium text-mute">Search appointments</label>
         <input
@@ -104,23 +104,25 @@ export default function AdminFilters({
         <ChipGroup label="Status" options={STATUSES} value={status} onChange={onStatus} />
       </div>
 
-      <div className="mt-5 grid grid-cols-1 gap-3 min-[520px]:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-5 grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <Control
           id="visit-date"
           label="Visit date"
           action={date ? (
-            <button type="button" className="text-xs font-medium text-pine" onClick={() => onDate('')}>
+            <button type="button" className="shrink-0 text-xs font-medium text-pine" onClick={() => onDate('')}>
               Clear
             </button>
           ) : null}
         >
-          <input
-            id="visit-date"
-            type="date"
-            className="field-input min-w-0"
-            value={date}
-            onChange={(event) => onDate(event.target.value)}
-          />
+          <div className="date-field">
+            <input
+              id="visit-date"
+              type="date"
+              className="field-input"
+              value={date}
+              onChange={(event) => onDate(event.target.value)}
+            />
+          </div>
         </Control>
         <Control id="sort-by" label="Sort by">
           <select id="sort-by" className="field-input" value={sort} onChange={(event) => onSort(event.target.value)}>

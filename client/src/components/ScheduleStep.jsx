@@ -34,18 +34,20 @@ export default function ScheduleStep({
         </button>
       </StepHeading>
 
-      <label htmlFor="visit-date" className="mb-1.5 block text-sm font-medium text-ink">
+      <label htmlFor="booking-date" className="mb-1.5 block text-sm font-medium text-ink">
         Date
       </label>
-      <input
-        id="visit-date"
-        type="date"
-        className="field-input w-full min-w-0 sm:max-w-xs"
-        min={min}
-        max={max}
-        value={date}
-        onChange={(event) => onDate(event.target.value)}
-      />
+      <div className="date-field date-field-narrow">
+        <input
+          id="booking-date"
+          type="date"
+          className="field-input"
+          min={min}
+          max={max}
+          value={date}
+          onChange={(event) => onDate(event.target.value)}
+        />
+      </div>
 
       <div className="mt-5">
         {!date ? <p className="text-sm text-mute">Choose a date to see open times.</p> : null}
